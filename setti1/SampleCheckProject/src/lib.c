@@ -5,5 +5,5 @@ int returns_zero()
   return 0;
   /* END SOLUTION */
 
-  /* STUB return 1; */
+  /* STUB: return 1; */
 }
