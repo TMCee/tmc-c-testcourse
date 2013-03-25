@@ -2,13 +2,21 @@
 #include <check.h>
 #include <stdio.h>
 
-/** A shorthand to make a one function testcase with the given points into a suite. */
-#define tmc_register_test(suite, tf, points) _tmc_register_test((suite), (tf), "" # tf, points)
-void _tmc_register_test(Suite *s, TFun tf, const char *fname, const char *points);
+/***** Main API *****/
 
 /** A shorthand to make one test suite with the given points */
 Suite* tmc_suite_create(const char *name, const char *points);
 
+/** A shorthand to make a one function testcase with the given points into a suite. */
+#define tmc_register_test(suite, tf, points) _tmc_register_test((suite), (tf), "" # tf, points)
+void _tmc_register_test(Suite *s, TFun tf, const char *fname, const char *points);
+
+/** A shorthand to make one memory test for a test function with given parameters */
+#define tmc_register_memtest(tf, check_leaks, max_bytes_allocated) _tmc_register_memtest("" # tf, check_leaks, max_bytes_allocated)
+void _tmc_register_memtest(const char *tf_name, int chek_leaks, int max_bytes_allocated);
+
+/** A shorthand for registering a test with memtest at the same time */
+#define tmc_register_test_with_memtest(suite, tf, points, check_leaks, max_bytes_allocated)  tmc_register_test(suite, tf, points); tmc_register_memtest(tf, check_leaks, max_bytes_allocated)
 
 /**
  * Runs a test suite so that tmc_test_results.xml and tmc_test_points.txt are created.
@@ -23,6 +31,8 @@ Suite* tmc_suite_create(const char *name, const char *points);
  */
 int tmc_run_tests(int argc, const char **argv, Suite *s);
 
+
+/***** Low-level API *****/
 
 /**
  * Set the points of a test case.
@@ -40,8 +50,9 @@ void tmc_set_suite_points (Suite *s, const char *s_name, const char *points);
 
 /** Prints all registered points once (in no particular order) to the given file. */
 int tmc_print_available_points(FILE *f, char delimiter);
+int tmc_print_memory_tests(FILE *f, char attr_delimiter, char line_delimiter);
 
-/** Prints lines with [testname] [point [point [...]]] to the given file. */
+/** Prints lines like "[test] testname pointname1 pointname2" to the given file. */
 int tmc_print_test_points(FILE *f);
-/** Prints lines with [suitename] [point [point [...]]] to given file */
+/** Prints lines with "[suite] suitename pointname1 pointname2" to given file */
 int tmc_print_suite_points(FILE *f);
