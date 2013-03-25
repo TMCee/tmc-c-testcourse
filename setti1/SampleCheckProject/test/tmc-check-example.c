@@ -27,8 +27,8 @@ int main(int argc, const char *argv[])
     tmc_register_test(s, test_foo, "1.1 1.2");
     tmc_register_test(s, test_bar, "1.2");
     tmc_register_test(s, test_lib_function, "1.3");
-    /*
+
     tmc_register_memtest(test_foo, 1, 1);
-    */
+
     return tmc_run_tests(argc, argv, s);
 }
