@@ -23,10 +23,10 @@ END_TEST
 int main(int argc, const char *argv[])
 {
     // Suite *s = suite_create("test-tmc-check");
-    Suite *s  = tmc_suite_create("test-tmc-check", "2.5 2.6 2.7");
-    tmc_register_test(s, test_foo, "1.1 1.2");
-    tmc_register_test(s, test_bar, "1.2");
-    tmc_register_test(s, test_lib_function, "1.3");
+    Suite *s  = tmc_suite_create("test-tmc-check", "2.5 2.6 2.7 all");
+    tmc_register_test(s, test_foo, "1.1 1.2 all");
+    tmc_register_test(s, test_bar, "1.2 all");
+    tmc_register_test(s, test_lib_function, "1.3 all");
 
     tmc_register_memtest(test_foo, 1, 1);
 
